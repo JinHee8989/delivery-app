@@ -23,7 +23,10 @@ class RestaurantDetailScreen extends StatelessWidget {
               isDetail: true,
               detail: '맛있는 떡볶이',
             ),
-            ProductCard()
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ProductCard(),
+            )
           ],
         ));
   }
