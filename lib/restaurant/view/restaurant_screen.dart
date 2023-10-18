@@ -11,6 +11,7 @@ class RestaurantScreen extends StatelessWidget {
   Future<List> paginateRestaurant() async {
     final dio = Dio();
     final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
+
     final resp = await dio.get(
       'http://$ip/restaurant',
       options: Options(
@@ -33,20 +34,23 @@ class RestaurantScreen extends StatelessWidget {
               future: paginateRestaurant(),
               builder: (context, AsyncSnapshot<List> snapshot) {
                 if (!snapshot.hasData) {
-                  return Container();
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
 
                 return ListView.separated(
                     itemBuilder: (_, index) {
                       final item = snapshot.data![index];
-                      final pItem = RestaurantModel.fromJson(json: item);
+                      final pItem = RestaurantModel.fromJson(item);
 
                       return GestureDetector(
                         child: RestaurantCard.fromModel(model: pItem),
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder: (_) => RestaurantDetailScreen()),
+                                builder: (_) =>
+                                    RestaurantDetailScreen(id: pItem.id)),
                           );
                         },
                       );
