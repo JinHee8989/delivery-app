@@ -14,8 +14,9 @@ abstract class RestaurantRepository {
       = _RestaurantRepository;
 
   // http://$ip/restaurant
-  // @GET('/')
-  // paginate();
+  @GET('/')
+  @Headers({'authorization': 'true'})
+  paginate();
 
   // http://$ip/restaurant/:id
   @GET('/{id}')
